@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
         if (scrollTop > 50) {
-            header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.08)'; // 小米风格的阴影更轻
         } else {
             header.style.boxShadow = 'none';
         }
         
-        // 滚动隐藏/显示导航栏
+        // 滚动隐藏/显示导航栏 - 小米风格的过渡更快
         if (scrollTop > lastScrollTop && scrollTop > 200) {
             header.style.transform = 'translateY(-100%)';
         } else {
@@ -29,8 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 窗口大小改变时重新计算连接线
     window.addEventListener('resize', setupConnectionLines);
 
-    // 初始化动态背景
-    initDynamicBackground();
+    // 初始化动态背景 - 小米风格
+    initMiDynamicBackground();
+    
+    // 初始化模型卡片数据流动画
+    initMiModelFlows();
 
     // 模型气泡交互效果
     const modelBubbles = document.querySelectorAll('.model-bubble');
@@ -337,27 +340,27 @@ document.addEventListener('DOMContentLoaded', function() {
     initDeviceMockup();
 });
 
-// 初始化动态背景 - 小米风格
-function initDynamicBackground() {
-    // 创建简洁的浮动元素 - 小米风格更简洁直接
+// 初始化小米风格的动态背景
+function initMiDynamicBackground() {
+    // 创建简洁的浮动元素 - 小米风格更简洁
     const floatingBg = document.querySelector('.floating-bg');
     if (!floatingBg) return;
     
-    // 添加几个浮动方块（小米风格倾向于几何形状，而非过多的粒子）
+    // 添加几个浮动方块（小米风格倾向于几何形状）
     for (let i = 0; i < 3; i++) {
         const particle = document.createElement('div');
         particle.className = 'floating-particle extra-particle';
         particle.style.top = `${Math.random() * 100}%`;
         particle.style.left = `${Math.random() * 100}%`;
-        particle.style.width = `${40 + Math.random() * 80}px`;
+        particle.style.width = `${40 + Math.random() * 60}px`;
         particle.style.height = particle.style.width;
-        particle.style.opacity = `${0.1 + Math.random() * 0.15}`;
-        particle.style.animationDelay = `${Math.random() * 3}s`;
+        particle.style.opacity = `${0.1 + Math.random() * 0.1}`;
+        particle.style.animationDelay = `${Math.random() * 2}s`;
         particle.style.borderRadius = '4px'; // 小米风格方形圆角
         
         // 小米品牌色调
         const colors = [
-            'rgba(255, 103, 0, 0.03)', // 小米橙
+            'rgba(255, 103, 0, 0.02)', // 小米橙
             'rgba(0, 193, 222, 0.02)', // 小米蓝
             'rgba(100, 100, 100, 0.02)' // 灰色
         ];
@@ -368,69 +371,118 @@ function initDynamicBackground() {
     }
 }
 
-// 高亮设备环 - 超炫酷效果
+// 初始化小米风格的模型数据流动画
+function initMiModelFlows() {
+    const deviceFrame = document.querySelector('.mi-device-frame');
+    if (!deviceFrame) return;
+    
+    const deviceRect = deviceFrame.getBoundingClientRect();
+    const deviceCenter = {
+        x: deviceRect.left + deviceRect.width / 2,
+        y: deviceRect.top + deviceRect.height / 2
+    };
+    
+    // 设置模型卡片与数据流连接的位置和角度
+    const models = ['gpt4', 'claude', 'grok'];
+    models.forEach(model => {
+        const card = document.getElementById(`${model}-card`);
+        const flow = document.getElementById(`${model}-flow`);
+        
+        if (!card || !flow) return;
+        
+        const cardRect = card.getBoundingClientRect();
+        const cardCenter = {
+            x: cardRect.left + cardRect.width / 2,
+            y: cardRect.top + cardRect.height / 2
+        };
+        
+        // 计算角度和距离
+        const angle = Math.atan2(cardCenter.y - deviceCenter.y, cardCenter.x - deviceCenter.x);
+        const distance = Math.sqrt(
+            Math.pow(cardCenter.x - deviceCenter.x, 2) + 
+            Math.pow(cardCenter.y - deviceCenter.y, 2)
+        ) * 0.8; // 小米风格的连接线稍短
+        
+        // 设置数据流的位置和角度
+        flow.style.top = `${deviceCenter.y}px`;
+        flow.style.left = `${deviceCenter.x}px`;
+        flow.style.width = `${distance}px`;
+        flow.style.transform = `rotate(${angle}rad)`;
+        flow.style.transformOrigin = '0 0';
+        
+        // 添加交互效果
+        card.addEventListener('mouseenter', () => {
+            flow.style.opacity = '1';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            flow.style.opacity = '0';
+        });
+    });
+}
+
+// 添加代码下滑动画初始化 - 小米风格
+function animateMiCodeLines() {
+    const codeLines = document.querySelectorAll('.mi-code-line');
+    
+    codeLines.forEach((line, index) => {
+        line.style.animation = `mi-code-line 3s infinite`;
+        line.style.animationDelay = `${index * 0.5}s`;
+    });
+}
+
+// 高亮设备环 - 小米风格
 function highlightDeviceRing(color) {
     const deviceRing = document.querySelector('.device-ring');
     if (!deviceRing) return;
     
-    // 小米风格的炫酷透明度
-    const rgbaColor = color.replace('#', 'rgba(') + ', 0.15)';
-    const rgbaColorFaint = color.replace('#', 'rgba(') + ', 0.08)';
+    // 小米风格的透明度更低
+    const rgbaColor = color.replace('#', 'rgba(') + ', 0.08)';
+    const rgbaColorFaint = color.replace('#', 'rgba(') + ', 0.04)';
     
     deviceRing.style.borderColor = rgbaColor;
-    deviceRing.style.boxShadow = `0 0 80px ${rgbaColorFaint}, 0 0 30px ${rgbaColorFaint}`;
     
-    // 更新伪元素的颜色和发光效果
+    // 更新伪元素的颜色
     const style = document.createElement('style');
     style.id = 'dynamic-ring-style';
     style.textContent = `
         .device-ring::before {
-            border-color: ${rgbaColor};
-            box-shadow: 0 0 60px ${rgbaColorFaint}, 0 0 20px ${rgbaColorFaint};
+            border-color: ${rgbaColorFaint};
         }
         .device-ring::after {
-            border-color: ${rgbaColorFaint};
-            box-shadow: 0 0 40px ${rgbaColorFaint}, 0 0 15px ${rgbaColorFaint};
+            border-color: ${rgbaColorFaint.replace('0.05', '0.03')};
         }
     `;
     
-    // 移除旧样式并添加新样式
-    const oldStyle = document.getElementById('dynamic-ring-style');
-    if (oldStyle) {
-        oldStyle.remove();
+    // 移除任何先前的动态样式
+    const prevStyle = document.getElementById('dynamic-ring-style');
+    if (prevStyle && prevStyle.parentNode) {
+        prevStyle.parentNode.removeChild(prevStyle);
     }
-    document.head.appendChild(style);
     
-    // 添加脉动效果
-    deviceRing.style.animation = 'xiaomi-ring-pulse 6s ease-in-out infinite';
-    deviceRing.style.animationPlayState = 'running';
+    document.head.appendChild(style);
 }
 
-// 重置设备环 - 恢复默认样式
+// 重置设备环
 function resetDeviceRing() {
     const deviceRing = document.querySelector('.device-ring');
     if (!deviceRing) return;
     
-    // 恢复默认样式
-    deviceRing.style.borderColor = 'rgba(255, 103, 0, 0.1)';
-    deviceRing.style.boxShadow = '0 0 60px rgba(255, 103, 0, 0.08)';
+    deviceRing.style.borderColor = 'rgba(0, 113, 227, 0.1)';
     
-    // 移除动态样式
-    const dynamicStyle = document.getElementById('dynamic-ring-style');
-    if (dynamicStyle) {
-        dynamicStyle.remove();
+    // 移除任何动态样式
+    const prevStyle = document.getElementById('dynamic-ring-style');
+    if (prevStyle && prevStyle.parentNode) {
+        prevStyle.parentNode.removeChild(prevStyle);
     }
-    
-    // 恢复默认动画
-    deviceRing.style.animation = 'xiaomi-ring-pulse 10s ease-in-out infinite';
 }
 
-// 设置连接线 - 小米风格超炫酷版
+// 设置连接线 - 小米风格
 function setupConnectionLines() {
     const models = [
-        { id: 'gpt4-bubble', color: '#ff6700', hoverColor: '#ff8533' }, // 小米橙色
-        { id: 'claude-bubble', color: '#00c1de', hoverColor: '#33d1e8' }, // 浅蓝色
-        { id: 'grok-bubble', color: '#424242', hoverColor: '#666666' }  // 深灰色
+        { id: 'gpt4-bubble', color: '#ff6700' }, // 小米橙色
+        { id: 'claude-bubble', color: '#00c1de' }, // 浅蓝色
+        { id: 'grok-bubble', color: '#424242' }  // 深灰色
     ];
     
     // 获取设备模型的位置
@@ -456,7 +508,7 @@ function setupConnectionLines() {
             y: bubbleRect.top + bubbleRect.height / 2
         };
         
-        // 计算角度和距离
+        // 计算角度和距离 - 小米风格更直接的连接
         const angle = Math.atan2(bubbleCenter.y - deviceCenter.y, bubbleCenter.x - deviceCenter.x);
         const distance = Math.sqrt(
             Math.pow(bubbleCenter.x - deviceCenter.x, 2) + 
@@ -466,135 +518,32 @@ function setupConnectionLines() {
         // 设置连接线的位置和旋转
         line.style.top = `${deviceCenter.y}px`;
         line.style.left = `${deviceCenter.x}px`;
-        line.style.width = `${distance * 0.85}px`; 
+        line.style.width = `${distance * 0.8}px`; // 小米风格线条稍短
         line.style.transform = `rotate(${angle}rad)`;
         line.style.transformOrigin = '0 0';
         
         // 设置连接线颜色
         line.style.background = `linear-gradient(90deg, 
-            ${model.color}20, 
-            ${model.color}30,
-            transparent)`;
+            ${model.color}10, 
+            ${model.color}30)`; 
         
-        // 超炫酷的交互效果
+        // 小米风格的简洁动画效果
         bubble.addEventListener('mouseenter', () => {
-            // 线条动画
-            line.style.opacity = '1';
-            line.style.height = '3px';
-            line.style.width = `${distance * 0.9}px`;
+            line.style.width = `${distance * 0.9}px`; // 小米风格悬停效果较小
             line.style.background = `linear-gradient(90deg, 
-                ${model.hoverColor}50, 
-                ${model.color}70,
-                transparent)`;
-            line.style.boxShadow = `0 0 30px ${model.color}50, 0 0 10px ${model.color}30`;
-            line.style.transition = 'all 0.3s cubic-bezier(0.19, 1, 0.22, 1)';
-            
-            // 给设备添加动态变色效果
-            device.style.boxShadow = `
-                0 30px 60px -15px rgba(0, 0, 0, 0.5),
-                0 0 40px ${model.color}40,
-                inset 0 1px 3px rgba(255, 255, 255, 0.15),
-                inset 0 -1px 3px rgba(0, 0, 0, 0.5)
-            `;
-            
-            // 更改设备内部显示的点的颜色
-            const dots = document.querySelectorAll('.dot');
-            dots.forEach((dot, index) => {
-                const delay = index * 0.1;
-                setTimeout(() => {
-                    dot.style.backgroundColor = model.color;
-                    dot.style.boxShadow = `0 0 20px ${model.color}`;
-                    dot.style.transform = 'scale(1.3)';
-                    
-                    if (dot.nextElementSibling) {
-                        dot.nextElementSibling.style.backgroundColor = model.hoverColor;
-                        dot.nextElementSibling.style.boxShadow = `0 0 20px ${model.hoverColor}`;
-                    }
-                }, delay * 1000);
-            });
-            
-            // 设备环荧光效果
+                ${model.color}40, 
+                ${model.color}60)`;
+            line.style.transition = 'all 0.2s ease';
             highlightDeviceRing(model.color);
-            
-            // 给气泡添加脉冲效果
-            const bubblePulse = bubble.querySelector('.bubble-pulse');
-            if (bubblePulse) {
-                bubblePulse.style.opacity = '1';
-                bubblePulse.style.animationDuration = '2s';
-                bubblePulse.style.background = `radial-gradient(circle, ${model.color}30, transparent)`;
-            }
-            
-            // 修改设备内的网格颜色
-            const deviceGrid = document.querySelector('.device-grid');
-            if (deviceGrid) {
-                deviceGrid.style.backgroundImage = `
-                    linear-gradient(${model.color}15 1px, transparent 1px),
-                    linear-gradient(90deg, ${model.color}15 1px, transparent 1px)
-                `;
-                deviceGrid.style.opacity = '0.6';
-                deviceGrid.style.animationDuration = '10s';
-            }
-            
-            // 3D悬浮效果
-            bubble.style.transform = 'scale(1.15) translateZ(30px)';
-            bubble.style.boxShadow = `
-                0 25px 45px rgba(0, 0, 0, 0.2),
-                0 0 40px ${model.color}30,
-                inset 0 -3px 8px rgba(0, 0, 0, 0.1),
-                inset 0 3px 8px rgba(255, 255, 255, 0.9)
-            `;
-            bubble.style.zIndex = '10';
         });
         
         bubble.addEventListener('mouseleave', () => {
-            // 重置线条效果
-            line.style.opacity = '0';
-            line.style.width = `${distance * 0.85}px`;
-            line.style.height = '2px';
+            line.style.width = `${distance * 0.8}px`;
             line.style.background = `linear-gradient(90deg, 
-                ${model.color}20, 
-                ${model.color}30,
-                transparent)`;
-            line.style.boxShadow = 'none';
-            
-            // 重置设备效果
-            device.style.boxShadow = `
-                0 25px 50px -10px rgba(0, 0, 0, 0.5),
-                0 0 30px rgba(255, 103, 0, 0.15),
-                inset 0 1px 2px rgba(255, 255, 255, 0.1),
-                inset 0 -1px 2px rgba(0, 0, 0, 0.5)
-            `;
-            
-            // 重置点的颜色
-            const dots = document.querySelectorAll('.dot');
-            dots.forEach(dot => {
-                dot.style.backgroundColor = '';
-                dot.style.boxShadow = '';
-                dot.style.transform = '';
-            });
-            
-            // 重置环形光晕
+                ${model.color}10, 
+                ${model.color}30)`;
+            line.style.transition = 'all 0.3s ease';
             resetDeviceRing();
-            
-            // 重置气泡脉冲
-            const bubblePulse = bubble.querySelector('.bubble-pulse');
-            if (bubblePulse) {
-                bubblePulse.style.opacity = '0';
-                bubblePulse.style.animationDuration = '4s';
-            }
-            
-            // 重置设备网格
-            const deviceGrid = document.querySelector('.device-grid');
-            if (deviceGrid) {
-                deviceGrid.style.backgroundImage = '';
-                deviceGrid.style.opacity = '0.3';
-                deviceGrid.style.animationDuration = '20s';
-            }
-            
-            // 重置气泡样式
-            bubble.style.transform = '';
-            bubble.style.boxShadow = '';
-            bubble.style.zIndex = '1';
         });
     });
 }
@@ -777,5 +726,5 @@ document.addEventListener('DOMContentLoaded', function() {
     setupConnectionLines();
     
     // 初始化动态背景
-    initDynamicBackground();
+    initMiDynamicBackground();
 }); 

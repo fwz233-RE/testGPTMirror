@@ -302,8 +302,8 @@ nav {
     position: relative;
     width: 100%;
     height: 450px;
-    margin: 0 auto;
-    overflow: hidden;
+    margin: 30px auto 0;
+    overflow: visible;
 }
 
 .device-container {
@@ -312,521 +312,304 @@ nav {
     height: 100%;
     max-width: 1000px;
     margin: 0 auto;
-    perspective: 800px; /* 小米风格透视效果更弱 */
+    perspective: 600px; /* 小米风格的透视效果更扁平 */
 }
 
-/* 小米风格的设备展示 - 超炫酷版 */
-.device-mockup {
+/* 小米风格设备框架 */
+.mi-device-frame {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) rotateX(10deg) rotateY(0deg);
-    width: 400px;
-    height: 230px;
-    background: linear-gradient(145deg, #151515, #2e2e2e);
-    border-radius: var(--border-radius);
+    transform: translate(-50%, -50%) rotateX(5deg); /* 小米设备展示几乎正面 */
+    width: 380px;
+    height: 220px;
+    background-color: #333;
+    border-radius: 4px;
     box-shadow: 
-        0 25px 50px -10px rgba(0, 0, 0, 0.5),
-        0 0 30px rgba(255, 103, 0, 0.15),
-        inset 0 1px 2px rgba(255, 255, 255, 0.1),
-        inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+        0 10px 20px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 103, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
     z-index: 2;
+}
+
+.mi-device-frame:hover {
+    transform: translate(-50%, -52%) rotateX(3deg);
+    box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 103, 0, 0.2);
+}
+
+.mi-device-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-    overflow: hidden;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    animation: device-float-enhanced 8s ease-in-out infinite;
-    border: 1px solid rgba(255, 103, 0, 0.1);
 }
 
-@keyframes device-float-enhanced {
-    0% {
-        transform: translate(-50%, -50%) rotateX(10deg) rotateY(0deg);
-        box-shadow: 
-            0 25px 50px -10px rgba(0, 0, 0, 0.5),
-            0 0 30px rgba(255, 103, 0, 0.15),
-            inset 0 1px 2px rgba(255, 255, 255, 0.1),
-            inset 0 -1px 2px rgba(0, 0, 0, 0.5);
-    }
-    25% {
-        transform: translate(-50%, -52%) rotateX(12deg) rotateY(3deg);
-        box-shadow: 
-            0 30px 60px -15px rgba(0, 0, 0, 0.6),
-            0 0 40px rgba(255, 103, 0, 0.2),
-            inset 0 1px 2px rgba(255, 255, 255, 0.15),
-            inset 0 -1px 2px rgba(0, 0, 0, 0.6);
-    }
-    50% {
-        transform: translate(-50%, -48%) rotateX(8deg) rotateY(-3deg);
-        box-shadow: 
-            0 20px 40px -5px rgba(0, 0, 0, 0.4),
-            0 0 25px rgba(255, 103, 0, 0.1),
-            inset 0 1px 2px rgba(255, 255, 255, 0.05),
-            inset 0 -1px 2px rgba(0, 0, 0, 0.4);
-    }
-    75% {
-        transform: translate(-51%, -50%) rotateX(9deg) rotateY(2deg);
-        box-shadow: 
-            0 28px 55px -12px rgba(0, 0, 0, 0.55),
-            0 0 35px rgba(255, 103, 0, 0.18),
-            inset 0 1px 2px rgba(255, 255, 255, 0.12),
-            inset 0 -1px 2px rgba(0, 0, 0, 0.55);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotateX(10deg) rotateY(0deg);
-        box-shadow: 
-            0 25px 50px -10px rgba(0, 0, 0, 0.5),
-            0 0 30px rgba(255, 103, 0, 0.15),
-            inset 0 1px 2px rgba(255, 255, 255, 0.1),
-            inset 0 -1px 2px rgba(0, 0, 0, 0.5);
-    }
+/* 小米风格网格布局 */
+.mi-grid-layout {
+    position: relative;
+    width: 90%;
+    height: 85%;
+    background-color: #121212;
+    border-radius: 2px;
 }
 
-.device-mockup:hover {
-    transform: translate(-50%, -50%) rotateX(5deg) rotateY(0deg) scale(1.05);
-    box-shadow: 
-        0 35px 70px -15px rgba(0, 0, 0, 0.7),
-        0 0 50px rgba(255, 103, 0, 0.3),
-        0 0 80px rgba(0, 193, 222, 0.2),
-        inset 0 1px 3px rgba(255, 255, 255, 0.2),
-        inset 0 -1px 3px rgba(0, 0, 0, 0.7);
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.device-mockup::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, 
-                rgba(255, 103, 0, 0.05) 0%, 
-                rgba(255, 103, 0, 0) 40%, 
-                rgba(0, 193, 222, 0) 60%, 
-                rgba(0, 193, 222, 0.05) 100%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 1;
-    pointer-events: none;
-    animation: device-shine 4s ease-in-out infinite;
-}
-
-@keyframes device-shine {
-    0%, 100% {
-        opacity: 0;
-        background-position: -200% 0;
-    }
-    50% {
-        opacity: 1;
-        background-position: 300% 0;
-    }
-}
-
-/* 设备内的网格背景 - 特斯拉风格 */
-.device-grid {
+/* 小米风格网格点 */
+.mi-grid-dots {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: 
-        linear-gradient(rgba(255, 103, 0, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 103, 0, 0.05) 1px, transparent 1px);
-    background-size: 20px 20px;
-    opacity: 0.3;
-    z-index: 0;
-    animation: xiaomi-grid-move 20s linear infinite;
-    pointer-events: none;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 15px 15px;
+    opacity: 0.5;
 }
 
-@keyframes xiaomi-grid-move {
+/* 小米风格加载条 */
+.mi-loading-bar {
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 80%;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.mi-loading-progress {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    animation: mi-loading 2s infinite ease-in-out;
+}
+
+@keyframes mi-loading {
     0% {
-        background-position: 0 0, 0 0;
+        left: -100%;
     }
     100% {
-        background-position: 20px 20px, 20px 20px;
+        left: 150%;
     }
 }
 
-.device-mockup:hover .device-grid {
-    opacity: 0.5;
-    background-image: 
-        linear-gradient(rgba(255, 103, 0, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 193, 222, 0.08) 1px, transparent 1px);
-    animation-duration: 15s;
-}
-
-/* 设备内的3D效果层 */
-.device-3d-layer {
+/* 小米风格代码块 */
+.mi-code-block {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    background: linear-gradient(145deg, rgba(0, 0, 0, 0.7), rgba(20, 20, 20, 0.7));
-    border-radius: 8px;
-    overflow: hidden;
-    transform-style: preserve-3d;
-    perspective: 1000px;
+    top: 30%;
+    left: 10%;
+    width: 80%;
+    height: 60%;
 }
 
-.device-3d-layer::before {
+.mi-code-line {
+    width: 100%;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.05);
+    margin-bottom: 12px;
+    border-radius: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mi-code-line:nth-child(1) { width: 70%; }
+.mi-code-line:nth-child(2) { width: 85%; }
+.mi-code-line:nth-child(3) { width: 60%; }
+.mi-code-line:nth-child(4) { width: 75%; }
+
+.mi-code-line::after {
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 103, 0, 0.3), transparent);
+    animation: mi-code-line 3s infinite;
+    animation-delay: calc(var(--delay, 0) * 0.5s);
+}
+
+.mi-code-line:nth-child(1) { --delay: 0; }
+.mi-code-line:nth-child(2) { --delay: 1; }
+.mi-code-line:nth-child(3) { --delay: 2; }
+.mi-code-line:nth-child(4) { --delay: 3; }
+
+@keyframes mi-code-line {
+    0% {
+        left: -100%;
+    }
+    50%, 100% {
+        left: 150%;
+    }
+}
+
+/* 小米风格模型卡片 */
+.mi-model-cards {
+    position: absolute;
+    top: 0;
     right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 30% 40%, rgba(255, 103, 0, 0.12), transparent 50%),
-        radial-gradient(circle at 70% 60%, rgba(0, 193, 222, 0.1), transparent 50%);
-    opacity: 0.7;
-    z-index: 0;
-    animation: xiaomi-color-shift 12s ease-in-out infinite;
-}
-
-@keyframes xiaomi-color-shift {
-    0%, 100% {
-        opacity: 0.7;
-        background-position: 0% 0%, 100% 100%;
-    }
-    33% {
-        opacity: 0.6;
-        background-position: 20% 20%, 80% 80%;
-    }
-    66% {
-        opacity: 0.8;
-        background-position: 80% 20%, 20% 80%;
-    }
-}
-
-/* 超炫酷的加载点 */
-.loading-dots {
+    height: 100%;
+    width: 180px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
     gap: 15px;
-    position: relative;
-    z-index: 3;
+    z-index: 1;
 }
 
-.dot {
-    width: 12px;
-    height: 12px;
+.mi-model-card {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    transform: translateX(30px);
+}
+
+.mi-model-card:hover {
+    transform: translateX(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: white;
+}
+
+.mi-model-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background-color: rgba(255, 103, 0, 0.1);
+    margin-right: 10px;
+}
+
+#gpt4-card .mi-model-icon {
+    background-color: rgba(16, 163, 127, 0.1);
+    color: #10a37f;
+}
+
+#claude-card .mi-model-icon {
+    background-color: rgba(125, 50, 220, 0.1);
+    color: #7d32dc;
+}
+
+#grok-card .mi-model-icon {
+    background-color: rgba(235, 87, 87, 0.1);
+    color: #eb5757;
+}
+
+.mi-model-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.mi-model-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.mi-connection-indicator {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background-color: var(--primary-color);
-    box-shadow: 0 0 20px rgba(255, 103, 0, 0.8);
-    animation: xiaomi-pulse 2s ease-in-out infinite;
-    position: relative;
-}
-
-.dot::after {
-    content: '';
     position: absolute;
-    top: -8px;
-    left: -8px;
-    right: -8px;
-    bottom: -8px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 103, 0, 0.3), transparent 70%);
-    animation: xiaomi-glow 2s ease-in-out infinite;
-    opacity: 0;
+    top: 10px;
+    right: 10px;
+    opacity: 0.5;
+    transition: all 0.3s ease;
 }
 
-@keyframes xiaomi-glow {
-    0%, 100% {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.2);
-    }
+.mi-model-card:hover .mi-connection-indicator {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(255, 103, 0, 0.5);
 }
 
-.dot:nth-child(2) {
-    animation-delay: 0.4s;
-    background-color: #00c1de;
-    box-shadow: 0 0 20px rgba(0, 193, 222, 0.8);
-}
-
-.dot:nth-child(2)::after {
-    background: radial-gradient(circle, rgba(0, 193, 222, 0.3), transparent 70%);
-}
-
-.dot:nth-child(3) {
-    animation-delay: 0.8s;
-    width: 10px;
-    height: 10px;
-}
-
-@keyframes xiaomi-pulse {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.5);
-        opacity: 0.5;
-    }
-}
-
-/* 超炫酷的环形光晕 */
-.device-ring {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 540px;
-    height: 320px;
-    border-radius: 270px;
-    border: 2px solid rgba(255, 103, 0, 0.1);
-    transform: translate(-50%, -50%) scale(1.1) rotateX(70deg);
-    z-index: 1;
-    animation: xiaomi-ring-pulse 10s ease-in-out infinite;
-    transform-style: preserve-3d;
-    box-shadow: 0 0 60px rgba(255, 103, 0, 0.08);
-}
-
-.device-ring::before {
-    content: '';
-    position: absolute;
-    top: -25px;
-    left: -25px;
-    right: -25px;
-    bottom: -25px;
-    border-radius: 270px;
-    border: 1px solid rgba(0, 193, 222, 0.08);
-    animation: xiaomi-ring-pulse 10s ease-in-out 2s infinite;
-    box-shadow: 0 0 40px rgba(0, 193, 222, 0.05);
-}
-
-.device-ring::after {
-    content: '';
-    position: absolute;
-    top: -50px;
-    left: -50px;
-    right: -50px;
-    bottom: -50px;
-    border-radius: 300px;
-    border: 1.5px solid rgba(255, 103, 0, 0.06);
-    animation: xiaomi-ring-pulse 10s ease-in-out 4s infinite;
-    box-shadow: 0 0 50px rgba(255, 103, 0, 0.06);
-}
-
-@keyframes xiaomi-ring-pulse {
-    0%, 100% {
-        transform: translate(-50%, -50%) scale(1.1) rotateX(70deg);
-        opacity: 0.6;
-        border-color: rgba(255, 103, 0, 0.1);
-    }
-    25% {
-        transform: translate(-50%, -50%) scale(1.15) rotateX(72deg) rotateZ(2deg);
-        opacity: 0.8;
-        border-color: rgba(255, 103, 0, 0.15);
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.05) rotateX(68deg) rotateZ(-2deg);
-        opacity: 0.4;
-        border-color: rgba(255, 103, 0, 0.05);
-    }
-    75% {
-        transform: translate(-50%, -50%) scale(1.12) rotateX(71deg) rotateZ(1deg);
-        opacity: 0.7;
-        border-color: rgba(255, 103, 0, 0.12);
-    }
-}
-
-.device-container:hover .device-ring {
-    border-color: rgba(255, 103, 0, 0.2);
-    box-shadow: 0 0 80px rgba(255, 103, 0, 0.12), 0 0 30px rgba(0, 193, 222, 0.08);
-    animation-play-state: paused;
-}
-
-.device-container:hover .device-ring::before {
-    border-color: rgba(0, 193, 222, 0.15);
-    box-shadow: 0 0 60px rgba(0, 193, 222, 0.1);
-    animation-play-state: paused;
-}
-
-.device-container:hover .device-ring::after {
-    border-color: rgba(255, 103, 0, 0.12);
-    box-shadow: 0 0 70px rgba(255, 103, 0, 0.1);
-    animation-play-state: paused;
-}
-
-/* 超炫酷的模型气泡 */
-.model-bubble {
-    position: absolute;
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    font-size: 18px;
-    z-index: 1;
-    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.15),
-        0 0 20px rgba(255, 103, 0, 0.08),
-        inset 0 -3px 8px rgba(0, 0, 0, 0.05),
-        inset 0 3px 8px rgba(255, 255, 255, 0.8);
-    overflow: hidden;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    transform-style: preserve-3d;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-}
-
-/* 各模型气泡位置和动画 */
-#gpt4-bubble {
-    color: #10a37f;
-    top: 15%;
-    right: 18%;
-    animation: xiaomi-float 12s ease-in-out infinite;
-}
-
-#claude-bubble {
-    color: #8a2be2;
-    bottom: 15%;
-    left: 18%;
-    animation: xiaomi-float 12s ease-in-out 4s infinite;
-}
-
-#grok-bubble {
-    color: #eb5757;
-    top: 50%;
-    left: 12%;
-    animation: xiaomi-float 12s ease-in-out 2s infinite;
-}
-
-@keyframes xiaomi-float {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    25% {
-        transform: translateY(-15px) rotate(-3deg);
-    }
-    50% {
-        transform: translateY(10px) rotate(3deg);
-    }
-    75% {
-        transform: translateY(-5px) rotate(1deg);
-    }
-}
-
-.bubble-pulse {
+/* 小米风格的数据流连接线 */
+.mi-data-flows {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    z-index: -1;
-    opacity: 0;
-    transform: scale(0.8);
-    animation: xiaomi-bubble-pulse 4s ease-in-out infinite;
+    pointer-events: none;
 }
 
-@keyframes xiaomi-bubble-pulse {
-    0%, 100% {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    50% {
-        opacity: 0.7;
-        transform: scale(1.3);
-    }
-}
-
-.model-bubble:hover {
-    transform: scale(1.15) translateZ(30px);
-    box-shadow: 
-        0 25px 45px rgba(0, 0, 0, 0.2),
-        0 0 40px rgba(255, 103, 0, 0.15),
-        inset 0 -3px 8px rgba(0, 0, 0, 0.1),
-        inset 0 3px 8px rgba(255, 255, 255, 0.9);
-    z-index: 10;
-}
-
-/* 超炫酷的连接线 */
-.connection-line {
+.mi-data-flow {
     position: absolute;
     top: 50%;
     left: 50%;
     height: 2px;
     background: linear-gradient(90deg, 
-        rgba(255, 103, 0, 0.3), 
         rgba(255, 103, 0, 0.1), 
-        rgba(0, 193, 222, 0.2));
+        rgba(255, 103, 0, 0.3));
     transform-origin: left center;
-    z-index: 0;
     opacity: 0;
-    transition: all 0.5s ease;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(255, 103, 0, 0.1);
-    border-radius: var(--border-radius);
+    transition: opacity 0.3s ease;
 }
 
-/* 连接线上的数据流效果 */
-.connection-line::after {
+.mi-model-card:hover + .mi-data-flows .mi-data-flow {
+    opacity: 1;
+}
+
+#gpt4-flow {
+    width: 120px;
+    transform: rotate(-15deg);
+    background: linear-gradient(90deg, 
+        rgba(16, 163, 127, 0.1), 
+        rgba(16, 163, 127, 0.3));
+}
+
+#claude-flow {
+    width: 130px;
+    transform: rotate(0deg);
+    background: linear-gradient(90deg, 
+        rgba(125, 50, 220, 0.1), 
+        rgba(125, 50, 220, 0.3));
+}
+
+#grok-flow {
+    width: 140px;
+    transform: rotate(15deg);
+    background: linear-gradient(90deg, 
+        rgba(235, 87, 87, 0.1), 
+        rgba(235, 87, 87, 0.3));
+}
+
+.mi-data-flow::after {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 40%;
+    left: 0;
+    width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, 
-        rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 0.8),
-        rgba(255, 255, 255, 0));
-    animation: xiaomi-data-flow 2s ease-in-out infinite;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    transform: translateX(-100%);
+    animation: mi-data-pulse 2s infinite ease-out;
 }
 
-@keyframes xiaomi-data-flow {
+@keyframes mi-data-pulse {
     0% {
-        left: -40%;
+        transform: translateX(-100%);
     }
-    100% {
-        left: 100%;
+    50%, 100% {
+        transform: translateX(100%);
     }
-}
-
-.model-bubble:hover + .connection-line {
-    opacity: 1;
-    height: 3px;
-    box-shadow: 0 0 30px rgba(255, 103, 0, 0.2), 0 0 10px rgba(0, 193, 222, 0.15);
-}
-
-#gpt4-bubble:hover + #gpt4-line::after {
-    background: linear-gradient(90deg, 
-        rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 0.9),
-        rgba(255, 255, 255, 0));
-    animation-duration: 1.5s;
-}
-
-#claude-bubble:hover + #claude-line::after {
-    background: linear-gradient(90deg, 
-        rgba(255, 255, 255, 0),
-        rgba(0, 193, 222, 0.9),
-        rgba(255, 255, 255, 0));
-    animation-duration: 1.8s;
-}
-
-#grok-bubble:hover + #grok-line::after {
-    background: linear-gradient(90deg, 
-        rgba(255, 255, 255, 0),
-        rgba(255, 103, 0, 0.9),
-        rgba(255, 255, 255, 0));
-    animation-duration: 1.2s;
 }
 
 /* 特性卡片和其他内容区域 */
@@ -1506,4 +1289,12 @@ footer {
         top: 100%;
         left: 100%;
     }
+}
+
+.device-mockup:hover {
+    transform: translate(-50%, -53%) rotateX(5deg) scale(1.05);
+    box-shadow: 
+        0 40px 70px -15px rgba(0, 0, 0, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.4);
 } 

@@ -44,38 +44,66 @@
             </div>
             <div class="hero-showcase animate-fade-in">
                 <div class="device-container">
-                    <!-- 设备环形光晕 -->
-                    <div class="device-ring"></div>
-                    
-                    <!-- 设备主体 -->
-                    <div class="device-mockup">
-                        <div class="device-grid"></div>
-                        <div class="device-3d-layer"></div>
-                        <div class="loading-dots">
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
+                    <!-- 小米风格设备框架 -->
+                    <div class="mi-device-frame">
+                        <div class="mi-device-screen">
+                            <div class="mi-grid-layout">
+                                <!-- 小米风格的网格点 -->
+                                <div class="mi-grid-dots"></div>
+                                <!-- 小米风格的加载动画 -->
+                                <div class="mi-loading-bar">
+                                    <div class="mi-loading-progress"></div>
+                                </div>
+                                <!-- 代码块显示效果 -->
+                                <div class="mi-code-block">
+                                    <div class="mi-code-line"></div>
+                                    <div class="mi-code-line"></div>
+                                    <div class="mi-code-line"></div>
+                                    <div class="mi-code-line"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
-                    <!-- 模型气泡 -->
-                    <div class="model-bubble" id="gpt4-bubble">
-                        <span>O1 Pro</span>
-                        <div class="bubble-pulse" style="background: radial-gradient(circle, rgba(16, 163, 127, 0.2), transparent)"></div>
+                    <!-- 模型卡片 - 小米风格 -->
+                    <div class="mi-model-cards">
+                        <div class="mi-model-card" id="gpt4-card">
+                            <div class="mi-model-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="mi-model-info">
+                                <span class="mi-model-name">O1 Pro</span>
+                                <div class="mi-connection-indicator"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mi-model-card" id="claude-card">
+                            <div class="mi-model-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="mi-model-info">
+                                <span class="mi-model-name">Claude 3.7</span>
+                                <div class="mi-connection-indicator"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mi-model-card" id="grok-card">
+                            <div class="mi-model-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="mi-model-info">
+                                <span class="mi-model-name">Grok 3</span>
+                                <div class="mi-connection-indicator"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="connection-line" id="gpt4-line"></div>
                     
-                    <div class="model-bubble" id="claude-bubble">
-                        <span>Claude 3.7</span>
-                        <div class="bubble-pulse" style="background: radial-gradient(circle, rgba(138, 43, 226, 0.2), transparent)"></div>
+                    <!-- 小米风格的数据流连接线 -->
+                    <div class="mi-data-flows">
+                        <div class="mi-data-flow" id="gpt4-flow"></div>
+                        <div class="mi-data-flow" id="claude-flow"></div>
+                        <div class="mi-data-flow" id="grok-flow"></div>
                     </div>
-                    <div class="connection-line" id="claude-line"></div>
-                    
-                    <div class="model-bubble" id="grok-bubble">
-                        <span>Grok 3</span>
-                        <div class="bubble-pulse" style="background: radial-gradient(circle, rgba(235, 87, 87, 0.2), transparent)"></div>
-                    </div>
-                    <div class="connection-line" id="grok-line"></div>
                 </div>
             </div>
         </div>
