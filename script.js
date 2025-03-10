@@ -928,8 +928,8 @@ function initModelCardInteractions() {
     
     // 模型信息
     const modelIntroductions = {
-        gpt: "我是OpenAI的O1 Pro模型，拥有强大的多模态能力，可以处理文本、代码和复杂问题，支持Deep Research深度分析，并且可以进行网络信息推理。",
-        claude: "我是Anthropic的Claude 3.7模型，擅长深度思考与复杂推理，特别在编程、创意写作和知识问答方面表现出色，支持处理大量上下文内容。",
+        gpt: "我是OpenAI的O1 Pro模型，拥有强大的多模态能力，支持Deep Research深度分析，并可以进行网络信息的推理。",
+        claude: "我是Anthropic的Claude 3.7模型，擅长推理，特别在编程方面表现出色，支持处理大量上下文内容。",
         grok: "我是xAI的Grok 3模型，拥有实时互联网访问能力，可以为您提供最新信息，并擅长解决技术问题和数据分析。"
     };
     
