@@ -283,12 +283,49 @@ document.addEventListener('DOMContentLoaded', function() {
             const icon = this.querySelector('.feature-icon i');
             icon.style.transform = 'scale(1.2) translateY(-5px)';
             icon.style.color = 'var(--accent-color)';
+            
+            // 添加自定义提示内容
+            const cardText = this.querySelector('h3').textContent;
+            let hintText = '';
+            
+            if (cardText.includes('多平台账号')) {
+                hintText = '';
+            } else if (cardText.includes('错峰')) {
+                hintText = '';
+            } else if (cardText.includes('性价比')) {
+                hintText = '';
+            } else if (cardText.includes('稳定')) {
+                hintText = '';
+            }
+            
+            if (hintText) {
+                const hint = document.createElement('div');
+                hint.className = 'feature-hint';
+                hint.textContent = hintText;
+                this.appendChild(hint);
+                
+                // 自动淡入提示
+                setTimeout(() => {
+                    hint.style.opacity = '1';
+                }, 50);
+            }
         });
         
         card.addEventListener('mouseleave', function() {
             const icon = this.querySelector('.feature-icon i');
             icon.style.transform = '';
             icon.style.color = '';
+            
+            // 移除提示
+            const hint = this.querySelector('.feature-hint');
+            if (hint) {
+                hint.style.opacity = '0';
+                setTimeout(() => {
+                    if (hint.parentNode === this) {
+                        this.removeChild(hint);
+                    }
+                }, 300);
+            }
         });
     });
 
@@ -338,6 +375,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 初始化
     initDeviceMockup();
+    
+    // 添加账号共享平台相关元素和动画
+    addAccountSharingElements();
+    
+    // 添加模型卡片样式
+    addModelCardsStyles();
+    
+    // 初始化模型卡片点击事件
+    initModelCardInteractions();
 });
 
 // 初始化小米风格的动态背景
@@ -598,6 +644,21 @@ function initDeviceMockup() {
                 opacity: 0.2;
                 animation: float-particle var(--duration, 25s) linear infinite;
             }
+            
+            .feature-hint {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(255, 103, 0, 0.95);
+                color: white;
+                padding: 10px;
+                border-radius: 0 0 var(--border-radius) var(--border-radius);
+                font-size: 14px;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                z-index: 10;
+            }
         `;
         
         document.head.appendChild(style);
@@ -706,6 +767,133 @@ function showFormSuccess() {
     contactForm.appendChild(successMessage);
 }
 
+// 添加账号共享平台相关元素和动画
+function addAccountSharingElements() {
+    // 添加账号共享相关样式
+    const style = document.createElement('style');
+    style.textContent = `
+        .account-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-color);
+            color: white;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .shared-account-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes account-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    `;
+    
+    document.head.appendChild(style);
+    
+    // 为模型卡片添加账号徽章
+    const modelCards = document.querySelectorAll('.model-card');
+    modelCards.forEach(card => {
+        const badge = document.createElement('div');
+        badge.className = 'account-badge';
+        badge.innerHTML = '<span class="shared-account-indicator"></span>账号共享';
+        card.appendChild(badge);
+    });
+    
+    // 添加错峰使用动画效果到价格卡片
+    const pricingCard = document.querySelector('.pricing-card');
+    if (pricingCard) {
+        const peakHoursDesc = document.createElement('div');
+        peakHoursDesc.className = 'peak-hours-desc';
+        peakHoursDesc.innerHTML = `
+            <h4>智能错峰技术</h4>
+            <div class="usage-timeline">
+                <div class="timeline-bar">
+                    <div class="timeline-progress"></div>
+                </div>
+                <div class="timeline-labels">
+                    <span>0:00</span>
+                    <span>8:00</span>
+                    <span>16:00</span>
+                    <span>24:00</span>
+                </div>
+            </div>
+            <p>系统智能分配账号使用时间，高峰期保证资源充足</p>
+        `;
+        
+        const features = pricingCard.querySelector('.pricing-features');
+        if (features) {
+            features.appendChild(peakHoursDesc);
+            
+            // 添加样式
+            const timelineStyle = document.createElement('style');
+            timelineStyle.textContent = `
+                .peak-hours-desc {
+                    margin-top: 20px;
+                    padding-top: 15px;
+                    border-top: 1px dashed rgba(0,0,0,0.1);
+                }
+                
+                .peak-hours-desc h4 {
+                    font-size: 16px;
+                    margin-bottom: 10px;
+                    color: var(--primary-color);
+                }
+                
+                .usage-timeline {
+                    margin: 15px 0;
+                }
+                
+                .timeline-bar {
+                    height: 8px;
+                    background: rgba(0,0,0,0.05);
+                    border-radius: 4px;
+                    overflow: hidden;
+                    position: relative;
+                }
+                
+                .timeline-progress {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 30%;
+                    background: var(--accent-color);
+                    border-radius: 4px;
+                    animation: timeline-move 10s infinite linear;
+                }
+                
+                .timeline-labels {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 5px;
+                    font-size: 12px;
+                    color: var(--secondary-color);
+                }
+                
+                @keyframes timeline-move {
+                    0% { left: -30%; }
+                    100% { left: 100%; }
+                }
+            `;
+            
+            document.head.appendChild(timelineStyle);
+        }
+    }
+}
+
 // 添加 CSS 动画类
 document.addEventListener('DOMContentLoaded', function() {
     const style = document.createElement('style');
@@ -727,4 +915,307 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 初始化动态背景
     initMiDynamicBackground();
-}); 
+});
+
+// 初始化模型卡片交互
+function initModelCardInteractions() {
+    const modelCards = document.querySelectorAll('.model-card-simple');
+    const dialogContainer = document.getElementById('aiDialogContainer');
+    const dialogClose = document.getElementById('aiDialogClose');
+    const aiDialogAvatar = document.getElementById('aiDialogAvatar');
+    const aiDialogTitle = document.getElementById('aiDialogTitle');
+    const aiChatMessages = document.getElementById('aiChatMessages');
+    
+    // 模型信息
+    const modelIntroductions = {
+        gpt: "我是OpenAI的O1 Pro模型，拥有强大的多模态能力，可以处理文本、代码和复杂问题，支持Deep Research深度分析，并且可以进行网络信息推理。",
+        claude: "我是Anthropic的Claude 3.7模型，擅长深度思考与复杂推理，特别在编程、创意写作和知识问答方面表现出色，支持处理大量上下文内容。",
+        grok: "我是xAI的Grok 3模型，拥有实时互联网访问能力，可以为您提供最新信息，并擅长解决技术问题和数据分析。"
+    };
+    
+    // 模型图标
+    const modelIcons = {
+        gpt: '<i class="fas fa-robot"></i>',
+        claude: '<i class="fas fa-brain"></i>',
+        grok: '<i class="fas fa-rocket"></i>'
+    };
+    
+    // 模型名称
+    const modelNames = {
+        gpt: "O1 Pro",
+        claude: "Claude 3.7",
+        grok: "Grok 3"
+    };
+    
+    // 模型颜色
+    const modelColors = {
+        gpt: "#10a37f",
+        claude: "#8a2be2",
+        grok: "#eb5757"
+    };
+    
+    // 添加点击效果到模型卡片
+    modelCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // 添加波纹动画
+            addRippleEffect(this, e);
+            
+            // 添加点击动画类
+            this.classList.add('active');
+            setTimeout(() => {
+                this.classList.remove('active');
+            }, 600);
+            
+            // 获取模型类型
+            const modelType = this.dataset.model;
+            
+            // 设置对话框标题和图标
+            aiDialogTitle.textContent = modelNames[modelType];
+            aiDialogAvatar.innerHTML = modelIcons[modelType];
+            aiDialogAvatar.style.background = modelColors[modelType];
+            
+            // 清空之前的内容
+            aiChatMessages.innerHTML = '';
+            
+            // 创建Transformer动画容器
+            const transformerContainer = document.createElement('div');
+            transformerContainer.className = 'transformer-animation-container';
+            aiChatMessages.appendChild(transformerContainer);
+            
+            // 创建模型介绍文本元素
+            const introTextElement = document.createElement('div');
+            introTextElement.className = 'model-intro-text';
+            introTextElement.textContent = '';
+            aiChatMessages.appendChild(introTextElement);
+            
+            // 显示对话框
+            dialogContainer.classList.add('show');
+            
+            // 创建并显示Transformer动画
+            createTransformerAnimation(transformerContainer, modelType, modelColors[modelType]);
+            
+            // 设置卡片发光效果
+            this.classList.add('show-glow');
+            
+            // 打字机效果显示介绍文本
+            typeWriterEffect(introTextElement, modelIntroductions[modelType], 30);
+        });
+    });
+    
+    // 关闭对话框
+    dialogClose.addEventListener('click', function() {
+        dialogContainer.classList.remove('show');
+        // 移除所有卡片的发光效果
+        modelCards.forEach(card => {
+            card.classList.remove('show-glow');
+        });
+    });
+    
+    // Transformer动画创建函数
+    function createTransformerAnimation(container, modelType, color) {
+        // 清空容器
+        container.innerHTML = '';
+        
+        // 创建Transformer架构元素
+        const transformerArchitecture = document.createElement('div');
+        transformerArchitecture.className = 'transformer-architecture';
+        
+        // 创建输入嵌入层
+        const inputEmbedding = document.createElement('div');
+        inputEmbedding.className = 'transformer-layer input-embedding';
+        inputEmbedding.innerHTML = '<div class="layer-label">输入嵌入</div>';
+        transformerArchitecture.appendChild(inputEmbedding);
+        
+        // 创建Transformer层
+        const numLayers = 6;
+        const layers = [];
+        
+        for (let i = 0; i < numLayers; i++) {
+            const layer = document.createElement('div');
+            layer.className = 'transformer-layer';
+            
+            const selfAttention = document.createElement('div');
+            selfAttention.className = 'transformer-component self-attention';
+            selfAttention.innerHTML = '<div class="component-label">多头注意力</div>';
+            
+            const feedForward = document.createElement('div');
+            feedForward.className = 'transformer-component feed-forward';
+            feedForward.innerHTML = '<div class="component-label">前馈神经网络</div>';
+            
+            layer.appendChild(selfAttention);
+            layer.appendChild(feedForward);
+            transformerArchitecture.appendChild(layer);
+            
+            layers.push({ layer, selfAttention, feedForward });
+        }
+        
+        // 创建输出层
+        const outputLayer = document.createElement('div');
+        outputLayer.className = 'transformer-layer output-layer';
+        outputLayer.innerHTML = '<div class="layer-label">输出层</div>';
+        transformerArchitecture.appendChild(outputLayer);
+        
+        // 添加到容器
+        container.appendChild(transformerArchitecture);
+        
+        // 创建连接线
+        const connectionContainer = document.createElement('div');
+        connectionContainer.className = 'transformer-connections';
+        container.appendChild(connectionContainer);
+        
+        // 创建数据点
+        const dataPoints = document.createElement('div');
+        dataPoints.className = 'data-points';
+        container.appendChild(dataPoints);
+        
+        // 添加数据流动动画
+        animateDataFlow(dataPoints, layers, inputEmbedding, outputLayer, connectionContainer, color);
+    }
+    
+    // 数据流动动画
+    function animateDataFlow(dataPoints, layers, inputLayer, outputLayer, connectionContainer, color) {
+        // 创建20个数据点
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                const dataPoint = document.createElement('div');
+                dataPoint.className = 'data-point';
+                dataPoint.style.backgroundColor = color;
+                dataPoints.appendChild(dataPoint);
+                
+                // 随机起始位置
+                const startX = Math.random() * 80 + 10; // 10% - 90%
+                dataPoint.style.left = `${startX}%`;
+                dataPoint.style.top = '0';
+                
+                // 动画: 输入层 -> 各Transformer层 -> 输出层
+                setTimeout(() => {
+                    dataPoint.style.top = inputLayer.offsetTop + (inputLayer.offsetHeight / 2) + 'px';
+                    
+                    // 添加闪光效果到输入层
+                    inputLayer.classList.add('processing');
+                    setTimeout(() => inputLayer.classList.remove('processing'), 300);
+                    
+                    // 通过每一层
+                    layers.forEach((layerObj, index) => {
+                        setTimeout(() => {
+                            dataPoint.style.top = layerObj.layer.offsetTop + (layerObj.layer.offsetHeight / 2) + 'px';
+                            
+                            // 注意力机制闪光
+                            setTimeout(() => {
+                                layerObj.selfAttention.classList.add('processing');
+                                
+                                // 创建注意力连接线
+                                createAttentionLines(connectionContainer, 3, layerObj.selfAttention, color);
+                                
+                                setTimeout(() => layerObj.selfAttention.classList.remove('processing'), 300);
+                            }, 100);
+                            
+                            // 前馈网络闪光
+                            setTimeout(() => {
+                                layerObj.feedForward.classList.add('processing');
+                                setTimeout(() => layerObj.feedForward.classList.remove('processing'), 300);
+                            }, 400);
+                            
+                        }, 800 * (index + 1));
+                    });
+                    
+                    // 最后到达输出层
+                    setTimeout(() => {
+                        dataPoint.style.top = outputLayer.offsetTop + (outputLayer.offsetHeight / 2) + 'px';
+                        outputLayer.classList.add('processing');
+                        setTimeout(() => {
+                            outputLayer.classList.remove('processing');
+                            dataPoint.style.opacity = '0';
+                            setTimeout(() => dataPoint.remove(), 500);
+                        }, 300);
+                    }, 800 * (layers.length + 1));
+                    
+                }, 200);
+                
+            }, i * 600); // 每600ms添加一个新数据点
+        }
+    }
+    
+    // 创建注意力连接线
+    function createAttentionLines(container, numLines, attentionComponent, color) {
+        const componentRect = attentionComponent.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        
+        for (let i = 0; i < numLines; i++) {
+            const line = document.createElement('div');
+            line.className = 'attention-line';
+            
+            // 设置线的位置
+            const startX = (componentRect.left - containerRect.left) + componentRect.width / 2;
+            const startY = (componentRect.top - containerRect.top) + componentRect.height / 2;
+            const angle = Math.random() * Math.PI * 2;
+            const length = Math.random() * 50 + 30;
+            
+            line.style.left = `${startX}px`;
+            line.style.top = `${startY}px`;
+            line.style.width = `${length}px`;
+            line.style.transform = `rotate(${angle}rad)`;
+            line.style.backgroundColor = color;
+            line.style.opacity = '0.7';
+            
+            container.appendChild(line);
+            
+            // 动画并在之后删除
+            setTimeout(() => {
+                line.style.opacity = '0';
+                setTimeout(() => line.remove(), 300);
+            }, 300);
+        }
+    }
+    
+    // 打字机效果函数
+    function typeWriterEffect(element, text, speed) {
+        let i = 0;
+        element.textContent = '';
+        
+        function typing() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(typing, speed);
+            }
+        }
+        
+        typing();
+    }
+}
+
+// 添加波纹效果
+function addRippleEffect(element, event) {
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    element.appendChild(ripple);
+    
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+    
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
+}
+
+// 添加样式
+function addModelCardsStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .models-simple {
+            margin-bottom: 40px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    `;
+    document.head.appendChild(style);
+} 
